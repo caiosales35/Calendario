@@ -1,9 +1,9 @@
 const express = require('express');
-
 const routes = express.Router();
 
-routes.get('/', (request, response) => {
-    return response.send('Iniciando API');
-});
+const UserController = require('./controllers/UserController');
+
+routes.get('/users', UserController.index);
+routes.post('/users', UserController.create);
 
 module.exports = routes;
