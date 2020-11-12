@@ -4,7 +4,7 @@ exports.up = function(knex) {
         table.string('id').primary();
         table.string('name').notNullable();
         table.string('email').notNullable();
-    })
+    });
 };
 
 exports.down = function(knex) {
