@@ -13,4 +13,4 @@ module.exports = {
         await connection('users').insert({id, name, email});
         return response.json({id});
     }
-}
+};
