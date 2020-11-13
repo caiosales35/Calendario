@@ -3,10 +3,10 @@ const routes = express.Router();
 
 const UserController = require('./controllers/UserController');
 const EventsController = require('./controllers/EventsController');
+const SessionController = require('./controllers/SessionController');
 
+routes.get('/session', SessionController.create);
 
-
-routes.get('/users', UserController.index);
 routes.post('/users', UserController.create);
 
 routes.get('/events', EventsController.index);
