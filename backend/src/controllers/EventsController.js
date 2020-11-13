@@ -4,7 +4,16 @@ const { index } = require('./UserController');
 module.exports = {
     async index(request, response) {
         const user_id = request.headers.authorization;
-        const events = await connection('events').where('user_id', user_id).select('*');
+        const { page = 1 } = request.query;
+
+        const [count] = await connection('events').where('user_id', user_id).count();
+        const events = await connection('events')
+            .where('user_id', user_id)
+            .limit(8)
+            .offset(8*(page-1))
+            .select('*');
+
+        response.header('X-Total-Count', count['count(*)']);
         return response.json(events);
     },
 
