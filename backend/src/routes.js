@@ -11,6 +11,7 @@ routes.post('/users', UserController.create);
 
 routes.get('/events', EventsController.index);
 routes.post('/events', EventsController.create);
+routes.put('/events/:id', EventsController.update);
 routes.delete('/events/:id', EventsController.delete);
 
 module.exports = routes;

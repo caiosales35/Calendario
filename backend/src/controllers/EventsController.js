@@ -1,5 +1,4 @@
 const connection = require('../database/connection');
-const { index } = require('./UserController');
 
 module.exports = {
     async index(request, response) {
@@ -49,6 +48,22 @@ module.exports = {
             return response.status(401).json({error: 'Operação não permitida!'});
         }
         await connection('events').where('id', id).delete();
+        return response.status(204).send();
+    },
+
+    async update(request, response) {
+        const { id } = request.params;
+        const { title, description, start, end } = request.body;
+        const user_id = request.headers.authorization;
+
+        const event = await connection('events').where('id', id).select('user_id').first();
+        if (event.user_id != user_id) {
+            return response.status(401).json({error: 'Operação não permitida!'});
+        }
+
+        await connection('events').where('id', id)
+            .update({title, description, start, end});
+
         return response.status(204).send();
     }
 
