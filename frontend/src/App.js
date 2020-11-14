@@ -1,6 +1,8 @@
+import Header from './Header';
+
 function App() {
   return (
-    <h1>Iniciando!</h1>
+    <Header title='Eventos'/>
   );
 }
 
