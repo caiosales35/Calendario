@@ -1,11 +1,29 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 
 import './styles.css';
-
+import api from '../../services/api';
 import logoImg from '../../assets/logo.png';
 
 export default function Register() {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+
+    const history = useHistory();
+
+    async function handleRegister(e) {
+        e.preventDefault();
+        try {
+            const response = await api.post('users', {name, email});
+            alert(`ID de acesso: ${response.data.id}`);
+            history.push('/');
+        } catch (err) {
+            alert('ERRO! Tente novamente.');
+        }
+        
+    }
+
     return (
         <div className="register-container">
             <div className="content">
@@ -17,9 +35,18 @@ export default function Register() {
                         Já tenho cadastro
                     </ Link>
                 </section>
-                <form>
-                    <input placeholder="Nome" />
-                    <input type="email" placeholder="Email" />
+                <form onSubmit={handleRegister}>
+                    <input 
+                        placeholder="Nome" 
+                        value={name}
+                        onChange={e => setName(e.target.value)}
+                    />
+                    <input 
+                        type="email" 
+                        placeholder="Email" 
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                    />
                     <button type="submit" className="button" >Criar meu cadastro</button>
                 </form>
             </div>
