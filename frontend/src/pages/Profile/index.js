@@ -11,7 +11,7 @@ export default function Profile() {
             <header>
                 <img src={logoImg} alt="Logo Eventos" />
                 <span>Bem Vindo, NOME!</span>
-                <Link className="button" to="/events/new" >Cadastrar novo evento</Link>
+                <Link className="button" to="/event/new" >Cadastrar novo evento</Link>
                 <button type="button">
                     <FiPower size={18} color="#4e44dd" />
                 </button>
