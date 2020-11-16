@@ -6,11 +6,13 @@ import './styles.css';
 import logoImg from '../../assets/logo.png';
 
 export default function Profile() {
+    const userName = localStorage.getItem("userName");
+
     return (
         <div className="profile-container">
             <header>
                 <img src={logoImg} alt="Logo Eventos" />
-                <span>Bem Vindo, NOME!</span>
+                <span>Bem Vindo, {userName}!</span>
                 <Link className="button" to="/event/new" >Cadastrar novo evento</Link>
                 <button type="button">
                     <FiPower size={18} color="#4e44dd" />
