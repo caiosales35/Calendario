@@ -1,12 +1,38 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FiPower, FiTrash2, FiEdit } from 'react-icons/fi';
+
+import api from '../../services/api';
 
 import './styles.css';
 
 import logoImg from '../../assets/logo.png';
 
 export default function Profile() {
+    const userId = localStorage.getItem("userId");
     const userName = localStorage.getItem("userName");
+
+    const [events, setEvents] = useState([]);
+
+    var dateOptions = { 
+        weekday: 'long', 
+        year: 'numeric', 
+        month: 'long', 
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric'
+     };
+
+    useEffect(() => {
+        api.get("/events", { 
+            headers: {
+                Authorization: userId
+            }
+         }).then(response => {
+            setEvents(response.data)
+         })
+    }, [userId]);
+    /* Array vazio, ou seja, sem dependencias, carrega uma unica vez */
 
     return (
         <div className="profile-container">
@@ -20,22 +46,24 @@ export default function Profile() {
             </header>
             <h1>Próximos Eventos</h1>
             <ul>
-                <li>
-                    <strong>TITULO:</strong>
-                    <p>Curso de JS</p>
-                    <strong>Descrição:</strong>
-                    <p>Primeiro curso de JS do mês.</p>
-                    <strong>Inicio:</strong>
-                    <p>20/11/2020 18:40h</p>
-                    <strong>Termino:</strong>
-                    <p>20/11/2020 20:00h</p>
-                    <button type="button" className="button-trash">
-                        <FiTrash2 size={20} color="#a8a8b3" />
-                    </button>
-                    <button type="button" className="button-edit">
-                        <FiEdit size={20} color="#a8a8b2" />
-                    </button>
-                </li>
+                {events.map(event => (
+                    <li key={event.id}>
+                        <strong>Título:</strong>
+                        <p>{event.title}</p>
+                        <strong>Descrição:</strong>
+                        <p>{event.description}</p>
+                        <strong>Inicio:</strong>
+                        <p>{Intl.DateTimeFormat('pt-BR', dateOptions).format(new Date(event.start))}h</p>
+                        <strong>Termino:</strong>
+                        <p>{Intl.DateTimeFormat('pt-BR', dateOptions).format(new Date(event.end))}h</p>
+                        <button type="button" className="button-trash">
+                            <FiTrash2 size={20} color="#a8a8b3" />
+                        </button>
+                        <button type="button" className="button-edit">
+                            <FiEdit size={20} color="#a8a8b2" />
+                        </button>
+                    </li>
+                ))}
             </ul>
         </div>
     );
