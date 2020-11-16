@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { FiPower, FiTrash2, FiEdit } from 'react-icons/fi';
 
 import api from '../../services/api';
@@ -13,6 +13,7 @@ export default function Profile() {
     const userName = localStorage.getItem("userName");
 
     const [events, setEvents] = useState([]);
+    const history = useHistory();
 
     var dateOptions = { 
         weekday: 'long', 
@@ -47,13 +48,18 @@ export default function Profile() {
         }
     }
 
+    function handleLogout() {
+        localStorage.clear();
+        history.push("/");
+    }
+
     return (
         <div className="profile-container">
             <header>
                 <img src={logoImg} alt="Logo Eventos" />
                 <span>Bem Vindo, {userName}!</span>
                 <Link className="button" to="/event/new" >Cadastrar novo evento</Link>
-                <button type="button">
+                <button type="button" onClick={handleLogout} >
                     <FiPower size={18} color="#4e44dd" />
                 </button>
             </header>
