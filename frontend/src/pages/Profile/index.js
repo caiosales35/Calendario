@@ -34,6 +34,19 @@ export default function Profile() {
     }, [userId]);
     /* Array vazio, ou seja, sem dependencias, carrega uma unica vez */
 
+    async function handleDeleteEvent(id) {
+        try {
+            await api.delete(`/events/${id}`, { 
+                headers: {
+                    Authorization: userId
+                }
+             });
+             setEvents(events.filter(event => event.id !== id));
+        } catch (err) {
+            alert("Erro ao remover evento...");
+        }
+    }
+
     return (
         <div className="profile-container">
             <header>
@@ -56,7 +69,7 @@ export default function Profile() {
                         <p>{Intl.DateTimeFormat('pt-BR', dateOptions).format(new Date(event.start))}h</p>
                         <strong>Termino:</strong>
                         <p>{Intl.DateTimeFormat('pt-BR', dateOptions).format(new Date(event.end))}h</p>
-                        <button type="button" className="button-trash">
+                        <button onClick={() => handleDeleteEvent(event.id)} type="button" className="button-trash">
                             <FiTrash2 size={20} color="#a8a8b3" />
                         </button>
                         <button type="button" className="button-edit">
