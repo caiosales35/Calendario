@@ -5,7 +5,7 @@ const UserController = require('./controllers/UserController');
 const EventsController = require('./controllers/EventsController');
 const SessionController = require('./controllers/SessionController');
 
-routes.get('/session', SessionController.create);
+routes.post('/session', SessionController.create);
 
 routes.post('/users', UserController.create);
 
