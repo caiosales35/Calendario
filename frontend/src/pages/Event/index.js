@@ -1,3 +1,5 @@
+import DateTimePicker from 'react-datetime-picker'
+/* Docs https://github.com/wojtekmaj/react-datetime-picker */
 import { Link } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 
@@ -20,9 +22,27 @@ export default function Event() {
                 <form>
                     <input placeholder="Titulo do evento" />
                     <textarea placeholder="Descrição" />
+                    <DateTimePicker 
+                        className="datetimepicker" 
+                        clearIcon="" 
+                        format="y-MM-dd HH:mm"
+                        minDate={new Date()}
+                        value={new Date()}
+                        calendarIcon="Início"
+                    />
+                    <DateTimePicker 
+                        className="datetimepicker" 
+                        clearIcon="" 
+                        format="y-MM-dd HH:mm"
+                        minDate={new Date()}
+                        value={new Date()}
+                        calendarIcon="Fim"
+                    />
+                    { /* 
                     <input type="text" placeholder="Inicio (AAAA-MM-DD HH:MM 24h)" />
                     <input type="text" placeholder="Fim (AAAA-MM-DD HH:MM 24h" />
                     <button type="submit" className="button" >Cadastrar evento</button>
+                    */ }
                 </form>
             </div>
         </div>
