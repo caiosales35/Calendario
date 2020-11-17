@@ -16,6 +16,14 @@ module.exports = {
         return response.json(events);
     },
 
+    async getById(request, response) {
+	const { id } = request.params;
+	const user_id = request.headers.authorization;
+
+	const event = await connection('events').where('id', id).where('user_id', user_id).first();
+        return response.json(event);
+    },
+
     async create(request, response) {
         const { title, description, start, end } = request.body;
         const user_id = request.headers.authorization;
