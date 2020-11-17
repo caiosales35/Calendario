@@ -1,11 +1,15 @@
 import { useState, useEffect } from 'react';
-import DateTimePicker from 'react-datetime-picker'
-/* Docs https://github.com/wojtekmaj/react-datetime-picker */
+/* import DateTimePicker from 'react-datetime-picker'
+Docs https://github.com/wojtekmaj/react-datetime-picker */
+import Datetime from 'react-datetime'
+import moment from 'moment';
+import 'moment/locale/pt-br';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 
 import api from '../../services/api';
 
+import "react-datetime/css/react-datetime.css";
 import './styles.css';
 
 import logoImg from '../../assets/logo.png';
@@ -17,8 +21,8 @@ export default function Event() {
 
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const [start, setStart] = useState(new Date());
-    const [end, setEnd] = useState(new Date());
+    const [start, setStart] = useState();
+    const [end, setEnd] = useState();
 
     useEffect(() => {
         if (eventId) {
@@ -27,10 +31,11 @@ export default function Event() {
                     Authorization: userId
                 }
                 }).then(response => {
-                    setStart(response.data.start)
-                    setEnd(response.data.end)
-                    setTitle(response.data.title)
-                    setDescription(response.data.description)
+                    setStart(moment(response.data.start).locale("pt-br").format("DD[/]MM[/]YYYY HH:mm"));
+                    setEnd(moment(response.data.end).locale("pt-br").format("DD[/]MM[/]YYYY HH:mm"));
+                    setTitle(response.data.title);
+                    setDescription(response.data.description);
+                    console.log(moment(response.data.start).locale("pt-br").format("DD[/]MM[/]YYYY hh:mm"))
                 });
         }
     }, [eventId, userId]);
@@ -81,24 +86,17 @@ export default function Event() {
                         value={description}
                         onChange={e => setDescription(e.target.value)}
                     />
-                    <DateTimePicker 
-                        className="datetimepicker" 
-                        clearIcon="" 
-                        format="y-MM-dd HH:mm"
-                        minDate={new Date()}
-                        value={start}
-                        calendarIcon="Início"
-                        onChange={e => setStart(e)}
-                    />
-                    <DateTimePicker 
-                        className="datetimepicker" 
-                        clearIcon="" 
-                        format="y-MM-dd HH:mm"
-                        minDate={new Date()}
-                        value={end}
-                        calendarIcon="Fim"
-                        onChange={e => setEnd(e)}
-                    />
+                    { eventId ? 
+                        <div>
+                            <Datetime value={start} onChange={e => setStart(e)} />
+                            <Datetime value={end} onChange={e => setEnd(e)} />
+                        </div>
+                        :
+                        <div>
+                            <Datetime onChange={e => setStart(e)} inputProps={{placeholder:"Início"}} />
+                            <Datetime onChange={e => setEnd(e)} inputProps={{placeholder:"Fim"}} />
+                        </div>
+                    }
                     { /* 
                     <input type="text" placeholder="Inicio (AAAA-MM-DD HH:MM 24h)" />
                     <input type="text" placeholder="Fim (AAAA-MM-DD HH:MM 24h" />
