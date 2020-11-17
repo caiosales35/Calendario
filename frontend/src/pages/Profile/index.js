@@ -78,9 +78,11 @@ export default function Profile() {
                         <button onClick={() => handleDeleteEvent(event.id)} type="button" className="button-trash">
                             <FiTrash2 size={20} color="#a8a8b3" />
                         </button>
-                        <button type="button" className="button-edit">
-                            <FiEdit size={20} color="#a8a8b2" />
-                        </button>
+                        <Link to={`/event/edit/${event.id}`} >
+                            <button type="button" className="button-edit">
+                                <FiEdit size={20} color="#a8a8b2" />
+                            </button>
+                        </Link>
                     </li>
                 ))}
             </ul>

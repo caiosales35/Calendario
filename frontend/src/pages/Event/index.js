@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import DateTimePicker from 'react-datetime-picker'
 /* Docs https://github.com/wojtekmaj/react-datetime-picker */
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 
 import api from '../../services/api';
@@ -11,32 +11,50 @@ import './styles.css';
 import logoImg from '../../assets/logo.png';
 
 export default function Event() {
+    const userId = localStorage.getItem("userId");
+    const eventId = useParams().id;
+    const history = useHistory();
+
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [start, setStart] = useState(new Date());
     const [end, setEnd] = useState(new Date());
 
-    const userId = localStorage.getItem("userId");
-    const history = useHistory();
+    useEffect(() => {
+        if (eventId) {
+            api.get(`/events/${eventId}`, { 
+                headers: {
+                    Authorization: userId
+                }
+                }).then(response => {
+                    setStart(response.data.start)
+                    setEnd(response.data.end)
+                    setTitle(response.data.title)
+                    setDescription(response.data.description)
+                });
+        }
+    }, [eventId, userId]);
 
-    async function handleNewEvent(e) {
+    async function saveEvent(e) {
         e.preventDefault();
+        const url = eventId ? `/events/${eventId}` : "/events";
         const data = {
             title,
             description,
             start,
             end,
             userId
-        }
+        };
+        const authorization = { 
+            headers: {
+                Authorization: userId
+            }
+         };
 
         try {
-            await api.post("events", data, { 
-                headers: {
-                    Authorization: userId
-                }
-             });
-             alert("Evento cadastrado!");
-             history.push("/profile");
+            eventId ? await api.put(url, data, authorization) : await api.post(url, data, authorization);
+            alert("Evento salvo!");
+            history.push("/profile");
         } catch (err) {
             alert("ERRO! Verifique se já não existe evento no mesmo horário");
         }
@@ -47,13 +65,12 @@ export default function Event() {
             <div className="content">
                 <section>
                     <img src={logoImg} alt="Logo Eventos" />
-                    <p>Cadastre um novo evento</p>
                     <Link className="back-link" to="/profile">
                         <FiArrowLeft size={16} color="#4e44dd"/>
                         Voltar
                     </ Link>
                 </section>
-                <form onSubmit={handleNewEvent}>
+                <form onSubmit={saveEvent}>
                     <input 
                         placeholder="Titulo do evento" 
                         value={title}
@@ -86,7 +103,7 @@ export default function Event() {
                     <input type="text" placeholder="Inicio (AAAA-MM-DD HH:MM 24h)" />
                     <input type="text" placeholder="Fim (AAAA-MM-DD HH:MM 24h" />
                     */ }
-                    <button type="submit" className="button" >Cadastrar evento</button>
+                    <button type="submit" className="button" >Salvar evento</button>
                 </form>
             </div>
         </div>

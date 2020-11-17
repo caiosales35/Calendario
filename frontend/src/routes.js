@@ -13,6 +13,7 @@ export default function Routes() {
                 <Route path="/register" component={Register} />
                 <Route path="/profile" component={Profile} />
                 <Route path="/event/new" component={Event} />
+                <Route path="/event/edit/:id" component={Event} />
             </Switch>
         </BrowserRouter>
     )
