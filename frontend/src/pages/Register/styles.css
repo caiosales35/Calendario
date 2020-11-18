@@ -27,6 +27,8 @@
 .register-container .content section img {
   height: 30%;
   width: 30%;
+  max-width: 339px;
+  max-height: 331px;
 }
 
 .register-container .content section p {
@@ -48,4 +50,18 @@
 .register-container .content form input {
   margin-top: 8px;
   color: black;
+}
+
+@media (max-width: 700px) {
+  .register-container .content {
+    flex-direction: column;
+    justify-content: center;
+    padding: 15px;
+  }
+  .register-container .content section img {
+    height: 30%;
+    width: 30%;
+    margin-left: 30%;
+    margin-top: 10px;
+  }
 }
