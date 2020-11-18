@@ -30,7 +30,10 @@ export default function Profile() {
                 Authorization: userId
             }
          }).then(response => {
-            setEvents(response.data)
+            setEvents(response.data.filter(event => {
+                return new Date(event.start) >= new Date();
+            }));
+            /* Futuramente implementar opção de visualizar em um intervalo de datas */
          })
     }, [userId]);
     /* Array vazio, ou seja, sem dependencias, carrega uma unica vez */

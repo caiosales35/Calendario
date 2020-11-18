@@ -35,7 +35,6 @@ export default function Event() {
                     setEnd(moment(response.data.end).locale("pt-br").format("DD[/]MM[/]YYYY HH:mm"));
                     setTitle(response.data.title);
                     setDescription(response.data.description);
-                    console.log(moment(response.data.start).locale("pt-br").format("DD[/]MM[/]YYYY hh:mm"))
                 });
         }
     }, [eventId, userId]);
