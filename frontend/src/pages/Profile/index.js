@@ -32,6 +32,9 @@ export default function Profile() {
          }).then(response => {
             setEvents(response.data.filter(event => {
                 return new Date(event.start) >= new Date();
+            }).sort((a, b) => {
+                return new Date(a.start) < new Date(b.start) ? -1 : 
+                    new Date(a.start) > new Date(b.start) ? 1 : 0;
             }));
             /* Futuramente implementar opção de visualizar em um intervalo de datas */
          })
