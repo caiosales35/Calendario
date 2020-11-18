@@ -79,7 +79,7 @@ export default function Profile() {
                         <p>{event.description}</p>
                         <strong>Inicio:</strong>
                         <p>{Intl.DateTimeFormat('pt-BR', dateOptions).format(new Date(event.start))}h</p>
-                        <strong>Termino:</strong>
+                        <strong>Fim:</strong>
                         <p>{Intl.DateTimeFormat('pt-BR', dateOptions).format(new Date(event.end))}h</p>
                         <button onClick={() => handleDeleteEvent(event.id)} type="button" className="button-trash">
                             <FiTrash2 size={20} color="#a8a8b3" />
