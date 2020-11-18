@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
+import ConfirmModal  from '../ConfirmModal';
 
 import './styles.css';
 import api from '../../services/api';
@@ -16,8 +17,9 @@ export default function Register() {
         e.preventDefault();
         try {
             const response = await api.post('users', {name, email});
-            alert(`ID de acesso: ${response.data.id}`);
-            history.push('/');
+            //alert(`ID de acesso: ${response.data.id}`);
+            ConfirmModal(`ID de acesso: ${response.data.id}`, history.push('/'));
+            //history.push('/');
         } catch (err) {
             alert('ERRO! Tente novamente.');
         }

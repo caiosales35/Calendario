@@ -85,3 +85,8 @@ form textarea {
 .back-link:hover {
   opacity: 0.8;
 }
+
+.react-confirm-alert-button-group > button {
+  background: #4e44dd !important;
+  font-weight: bold !important;
+}
