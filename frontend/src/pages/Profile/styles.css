@@ -93,3 +93,18 @@
   line-height: 21px;
   font-size: 16px;
 }
+
+@media (max-width: 700px) {
+  .profile-container header {
+    flex-direction: column;
+    justify-content: center;
+  }
+  .profile-container header a {
+    margin-left: 0px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .profile-container ul {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
