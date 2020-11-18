@@ -27,6 +27,8 @@
 .event-container .content section img {
   height: 30%;
   width: 30%;
+  max-width: 339px;
+  max-height: 331px;
 }
 
 .event-container .content section p {
@@ -64,4 +66,18 @@
 .react-datetime-picker__wrapper {
   border: none;
   align-items: center;
+}
+
+@media (max-width: 800px) {
+  .event-container .content {
+    padding: 15px;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .event-container .content section img {
+    margin-left: 30%;
+    margin-top: 10px;
+    height: 40%;
+    width: 30%;
+  }
 }
