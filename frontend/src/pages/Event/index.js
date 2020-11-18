@@ -31,8 +31,10 @@ export default function Event() {
                     Authorization: userId
                 }
                 }).then(response => {
-                    setStart(moment(response.data.start).locale("pt-br").format("DD[/]MM[/]YYYY HH:mm"));
-                    setEnd(moment(response.data.end).locale("pt-br").format("DD[/]MM[/]YYYY HH:mm"));
+                    //setStart(moment(response.data.start).locale("pt-br").format("DD[/]MM[/]YYYY HH:mm"));
+                    //setEnd(moment(response.data.end).locale("pt-br").format("DD[/]MM[/]YYYY HH:mm"));
+                    setStart(response.data.start);
+                    setEnd(response.data.end);
                     setTitle(response.data.title);
                     setDescription(response.data.description);
                 });
@@ -87,8 +89,14 @@ export default function Event() {
                     />
                     { eventId ? 
                         <div>
-                            <Datetime value={start} onChange={e => setStart(e)} />
-                            <Datetime value={end} onChange={e => setEnd(e)} />
+                            <Datetime 
+                                value={moment(start).locale("pt-br").format("DD[/]MM[/]YYYY HH:mm")}
+                                onChange={e => setStart(e)} 
+                            />
+                            <Datetime 
+                                value={moment(end).locale("pt-br").format("DD[/]MM[/]YYYY HH:mm")}
+                                onChange={e => setEnd(e)} 
+                            />
                         </div>
                         :
                         <div>
