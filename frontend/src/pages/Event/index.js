@@ -81,27 +81,37 @@ export default function Event() {
                         placeholder="Titulo do evento" 
                         value={title}
                         onChange={e => setTitle(e.target.value)}
+                        required
                     />
                     <textarea 
                         placeholder="Descrição" 
                         value={description}
                         onChange={e => setDescription(e.target.value)}
+                        required
                     />
                     { eventId ? 
                         <div>
                             <Datetime 
                                 value={moment(start).locale("pt-br").format("DD[/]MM[/]YYYY HH:mm")}
                                 onChange={e => setStart(e)} 
+                                inputProps={{required:"required"}}
                             />
                             <Datetime 
                                 value={moment(end).locale("pt-br").format("DD[/]MM[/]YYYY HH:mm")}
                                 onChange={e => setEnd(e)} 
+                                inputProps={{required:"required"}}
                             />
                         </div>
                         :
                         <div>
-                            <Datetime onChange={e => setStart(e)} inputProps={{placeholder:"Início"}} />
-                            <Datetime onChange={e => setEnd(e)} inputProps={{placeholder:"Fim"}} />
+                            <Datetime 
+                                onChange={e => setStart(e)} 
+                                inputProps={{placeholder:"Início", required:"required"}} 
+                            />
+                            <Datetime 
+                                onChange={e => setEnd(e)}
+                                inputProps={{placeholder:"Fim", required:"required"}}
+                            />
                         </div>
                     }
                     { /* 

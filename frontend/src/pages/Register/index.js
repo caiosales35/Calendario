@@ -40,12 +40,14 @@ export default function Register() {
                         placeholder="Nome" 
                         value={name}
                         onChange={e => setName(e.target.value)}
+                        required
                     />
                     <input 
                         type="email" 
                         placeholder="Email" 
                         value={email}
                         onChange={e => setEmail(e.target.value)}
+                        required
                     />
                     <button type="submit" className="button" >Criar meu cadastro</button>
                 </form>
