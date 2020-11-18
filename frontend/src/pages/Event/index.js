@@ -8,6 +8,7 @@ import { Link, useHistory, useParams } from 'react-router-dom';
 import { FiArrowLeft } from 'react-icons/fi';
 
 import api from '../../services/api';
+import ConfirmModal from '../ConfirmModal';
 
 import "react-datetime/css/react-datetime.css";
 import './styles.css';
@@ -59,10 +60,9 @@ export default function Event() {
 
         try {
             eventId ? await api.put(url, data, authorization) : await api.post(url, data, authorization);
-            alert("Evento salvo!");
-            history.push("/profile");
+            ConfirmModal("Evento salvo!", history.push('/profile'));
         } catch (err) {
-            alert("ERRO! Verifique se já não existe evento no mesmo horário");
+            ConfirmModal("Erro! Verifique se já não existe evento no mesmo horário");
         }
     }
 

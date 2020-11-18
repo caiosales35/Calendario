@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import { FiPower, FiTrash2, FiEdit } from 'react-icons/fi';
 
 import api from '../../services/api';
+import ConfirmModal from '../ConfirmModal';
 
 import './styles.css';
 
@@ -50,7 +51,7 @@ export default function Profile() {
              });
              setEvents(events.filter(event => event.id !== id));
         } catch (err) {
-            alert("Erro ao remover evento...");
+            ConfirmModal("Erro ao remover evento...");
         }
     }
 
